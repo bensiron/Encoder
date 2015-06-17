@@ -1,0 +1,25 @@
+﻿<ugts:UgtsWindow x:Class="UGTS.UI.SecureStringWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ugts="clr-namespace:UGTS.UI;assembly=UGTS"        
+        
+    Title="Secure String Encoder" Height="284" Width="521" MinWidth="353" MinHeight="224">
+    <Grid TextOptions.TextFormattingMode="Display" HorizontalAlignment="Stretch" Margin="0,3,0,-4" RenderTransformOrigin="0.473,0.714">
+        <Label Content="Username:" HorizontalAlignment="Left" Name="usernameLabel" Width="64" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="11" HorizontalContentAlignment="Right" />
+        <TextBox Height="20" Text="{Binding Path=Username.Value, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="79,10,125,0" Name="usernameEditor" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="12" VerticalContentAlignment="Center" />
+        <CheckBox Content="System Account" IsChecked="{Binding Path=SystemAccount.Value}" Name="systemAccountCheck" Margin="0,12,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="106"/>
+        <Label Content="Password:" HorizontalAlignment="Left" Margin="10,33,0,0" Name="passwordLabel" VerticalAlignment="Top" Width="64" FontSize="11" HorizontalContentAlignment="Right" />
+        <PasswordBox Height="20" ugts:PasswordBoxAssistant.BindPassword="true" Visibility="{Binding Path=IsPasswordVisible.Value}" ugts:PasswordBoxAssistant.BoundPassword="{Binding Path=Password.Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" IsEnabled="{Binding Path=IsPasswordEnabled.Value}" Margin="79,35,125,0" Name="passwordEditor" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="12" VerticalContentAlignment="Center" />
+        <TextBox Height="20" HorizontalAlignment="Stretch" Visibility="{Binding Path=IsPasswordTextVisible.Value}" Text="{Binding Path=Password.Value}" IsEnabled="{Binding Path=IsPasswordEnabled.Value}" Margin="79,35,125,0" Name="passwordTextEditor" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="12" VerticalContentAlignment="Center" />
+        <CheckBox Content="Show Password" IsChecked="{Binding Path=ShowPassword.Value}" IsEnabled="{Binding Path=IsPasswordEnabled.Value}" Name="showPasswordCheck" Margin="0,37,14,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="102"/>
+        <Label Content="Plaintext:" HorizontalAlignment="Left" Margin="10,56,0,0" Name="plaintextLabel" VerticalAlignment="Top" Width="64" FontSize="11" HorizontalContentAlignment="Right" />
+        <TextBox Height="20" Text="{Binding Path=Plaintext.Value, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="79,60,10,0" Name="plaintextEditor" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="12" VerticalContentAlignment="Center" />
+        <Label Content="Ciphertext:" Name="ciphertextLabel" HorizontalAlignment="Left" Margin="-5,82,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.079,0.12" Width="79" HorizontalContentAlignment="Right" Height="26"/>
+        <TextBox Name="ciphertextEditor" Text="{Binding Path=Ciphertext.Value, UpdateSourceTrigger=PropertyChanged}" Margin="79,85,10,65" TextWrapping="Wrap" FontFamily="Lucida Console"/>
+        <Label Content="Setting:" HorizontalAlignment="Left" Margin="10,0,0,37" Width="64" HorizontalContentAlignment="Right" Height="25" VerticalAlignment="Bottom"/>
+        <TextBox TextWrapping="NoWrap" Name="settingEditor" Text="{Binding Path=Ciphertext.Value, UpdateSourceTrigger=PropertyChanged}" Margin="79,0,10,40" Height="20" VerticalAlignment="Bottom" FontFamily="Lucida Console" ClipToBounds="True" VerticalContentAlignment="Center"/>
+        <Button Content="Encode" Name="encodeButton" IsEnabled="{Binding Path=IsEncodeEnabled.Value}" Click="HEncode" HorizontalAlignment="Left" Margin="79,0,0,14" Width="75" Height="19" VerticalAlignment="Bottom"/>
+        <Button Content="Decode" Name="decodeButton" IsEnabled="{Binding Path=IsDecodeEnabled.Value}" Click="HDecode" HorizontalAlignment="Left" Margin="159,0,0,14" Width="75" Height="19" VerticalAlignment="Bottom"/>
+        <Button Content="To Clipboard" Name="clipboardButton" Click="HClipboard" HorizontalAlignment="Left" Margin="239,0,0,14" Width="88" Height="19" VerticalAlignment="Bottom"/>
+    </Grid>
+</ugts:UgtsWindow>
