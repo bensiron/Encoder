@@ -1,20 +1,17 @@
 using System;
-using System.ComponentModel;
-using System.Security;
 using System.Security.Cryptography;
 using System.Windows;
-using UGTS;
 using UGTS.Exceptions;
 using UGTS.UI;
 
-namespace UGTS.UI
+namespace UGTS.Encoder
 {
-	public partial class SecureStringWindow : UgtsWindow
+	public partial class SecureStringWindow
 	{
-        public Observable<string> Username { get; set; }
-        public Observable<string> Password { get; set; }
-        public Observable<string> Plaintext { get; set; }
-        public Observable<string> Ciphertext { get; set; }
+	    public Observable<string> Username { get; set; }
+	    public Observable<string> Password { get; set; }
+	    public Observable<string> Plaintext { get; set; }
+	    public Observable<string> Ciphertext { get; set; }
         public Observable<string> Setting { get; set; }
         public Observable<bool> SystemAccount { get; set; }
         public Observable<bool> ShowPassword { get; set; }
@@ -24,7 +21,7 @@ namespace UGTS.UI
         public Computed<bool> IsEncodeEnabled { get; set; }
         public Computed<bool> IsDecodeEnabled { get; set; }
 
-        public SecureStringWindow() : base()
+        public SecureStringWindow() 
 		{
             Username = new Observable<string>("");
             Password = new Observable<string>("");
@@ -69,7 +66,7 @@ namespace UGTS.UI
                 if (name.StartsWith("<"))
                 {
                     var d = MXml.LoadText(name);
-                    name = d.X("key", "");
+                    name = d.X("key");
                 }
                 var pos = name.IndexOf(':');
                 if (pos >= 0) name = name.Substring(0, pos);
@@ -102,7 +99,7 @@ namespace UGTS.UI
             get { return IsSystemUser() ? DataProtectionScope.LocalMachine : DataProtectionScope.CurrentUser; }
         }
 
-        private void HDecode(System.Object sender, System.EventArgs e)
+        private void HDecode(object sender, EventArgs e)
         {
             try
             {
@@ -119,7 +116,7 @@ namespace UGTS.UI
  
                     if (ct.XIsBlank()) throw MException.MessageException("Setting xml tag had no value attribute.");
                 }
-                Plaintext.Value = ct.XDecrypt(ProtectionScope);
+                Plaintext.Value = ct.XDecrypt();
             }
             catch (Exception ex)
             {
@@ -132,7 +129,7 @@ namespace UGTS.UI
             }
         }
 
-        private Exception AnalyzeException(Exception ex)
+        private static Exception AnalyzeException(Exception ex)
         {
             if (ex.Message.StartsWith("Key not valid in specified state")) ex = MException.MessageException(ex.Message + " - please verify that the username matches the user originally used to create this secure string.");
             if (ex.Message.Contains("data is invalid")) ex = MException.MessageException("The ciphertext data blob is invalid.");
@@ -172,17 +169,17 @@ namespace UGTS.UI
             return (user == CurrentUser().ToLower().Trim());
         }
 
-        private void HActivate(object sender, System.EventArgs e)
+        private void HActivate(object sender, EventArgs e)
         {
             plaintextEditor.Focus();
         }
 
-        private void HLoad(object sender, System.EventArgs e)
+        private void HLoad(object sender, EventArgs e)
         {
             Username.Value = CurrentUser();
         }
 
-        private string CurrentUser()
+        private static string CurrentUser()
         {
             return Environment.UserDomainName + "\\" + Environment.UserName;
         }
