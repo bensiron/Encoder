@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Security.Cryptography;
 using System.Windows;
+using UGTS.Crypto;
 using UGTS.Exceptions;
 using UGTS.UI;
 
