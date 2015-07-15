@@ -110,7 +110,7 @@
     <EmbeddedResource Include="encoder.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Base\base\UGTS.csproj">
+    <ProjectReference Include="..\Base\source\UGTS\UGTS.csproj">
       <Project>{F4A49E74-68C8-4C80-ACCB-DF2A10D10B3D}</Project>
       <Name>UGTS</Name>
     </ProjectReference>

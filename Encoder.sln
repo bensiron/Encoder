@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encoder", "Encoder.csproj", "{2BA3DC84-0606-436F-9FB4-320238FAF6F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UGTS", "..\Base\base\UGTS.csproj", "{F4A49E74-68C8-4C80-ACCB-DF2A10D10B3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UGTS", "..\Base\source\UGTS\UGTS.csproj", "{F4A49E74-68C8-4C80-ACCB-DF2A10D10B3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
