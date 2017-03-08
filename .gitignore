@@ -133,6 +133,7 @@ publish/
 
 # NuGet Packages
 nuspec/*.nupkg
+!packages/**
 
 # Windows Azure Build Output
 csx/
