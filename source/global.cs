@@ -1,6 +1,6 @@
 using System;
-using UGTS.UI;
 using System.Windows;
+using UGTS.UI;
 
 namespace UGTS.Encoder
 {
