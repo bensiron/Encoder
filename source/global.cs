@@ -7,11 +7,11 @@ using UGTS.UI;
 namespace UGTS.Encoder
 {
     public static class MGlobal
-	{
-	    private static readonly ILog log = LogManager.GetLogger(typeof (MGlobal));
+    {
+        private static readonly ILog log = LogManager.GetLogger(typeof (MGlobal));
 
         [STAThread]
-		public static void Main()
+        public static void Main()
         {
             XmlConfigurator.Configure();
             log.Info("run begin");
@@ -23,8 +23,8 @@ namespace UGTS.Encoder
 
         private static void Run()
         {
-	        var w = new SecureStringWindow {WindowStartupLocation = WindowStartupLocation.CenterScreen};
-	        w.ShowDialog();
+            var w = new SecureStringWindow {WindowStartupLocation = WindowStartupLocation.CenterScreen};
+            w.ShowDialog();
         }
-	}
+    }
 }

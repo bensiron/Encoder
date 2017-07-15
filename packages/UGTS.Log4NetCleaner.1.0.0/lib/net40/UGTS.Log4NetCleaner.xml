@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>UGTS.Log4Net.Extensions</name>
+        <name>UGTS.Log4NetCleaner</name>
     </assembly>
     <members>
         <member name="T:JetBrains.Annotations.CanBeNullAttribute">
@@ -589,15 +589,15 @@
             The attribute must be mentioned in your member reordering patterns
             </remarks>
         </member>
-        <member name="T:UGTS.Log4Net.Extensions.LogCleaner">
+        <member name="T:UGTS.Log4NetCleaner.LogCleaner">
             <summary>
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogCleaner.#ctor">
+        <member name="M:UGTS.Log4NetCleaner.LogCleaner.#ctor">
             <summary>
             </summary>
         </member>
-        <member name="F:UGTS.Log4Net.Extensions.LogCleaner.LastCleaning">
+        <member name="F:UGTS.Log4NetCleaner.LogCleaner.LastCleaning">
             <summary>
             Gets or sets the last time that the log directory was cleaned.
             </summary>
@@ -607,7 +607,7 @@
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.DirectoryCleaner">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.DirectoryCleaner">
             <summary>
             Gets or sets the implementation of the directory cleaner.
             </summary>
@@ -617,7 +617,7 @@
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.TaskRunner">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.TaskRunner">
             <summary>
             Gets or sets the implementation of the cleaning task runner
             </summary>
@@ -628,7 +628,7 @@
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.BasePath">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.BasePath">
             <summary>
             Gets or sets the root directory of the log files for cleaning.
             </summary>
@@ -637,22 +637,23 @@
             If this value is omitted, it will be inferred from the File property.
             Sometimes inference does not work if the File is not a directory but also contains
             part of the file name.
-            Use care when setting this property and the CleaningFileExtension.  The appender
-            will clean any directory you give it, and with a CleaningFileExtension of * this can 
+            Use care when setting this property and the FileExtension.  The appender
+            will clean any directory you give it, and with a FileExtension of * this can 
             result in non-log files being removed.
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.FileExtension">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.FileExtension">
             <summary>
             Gets or sets the filename extension of the log files to remove.
             </summary>
             <remarks>
             <para>
-            This can be * or blank to clean all files whatever the file extension or lack thereof.
+            This can be explicitly set to * to clean all files whatever the file extension or lack thereof.
             The lastcleaning.check file is never removed regardless of this property.
             If this property is omitted, the file extension will be inferred from the 
-            extension of the log files created.  Usually inference works well enough so that you need not specify this property,
+            extension of the log files created.  If the file extension cannot be inferred, then cleaning will not be performed.  
+            Usually inference works well enough so that you need not specify this property,
             but if your log file naming convention is complex enough, you may need to explicitly set this property.
             This extension can include or omit a leading dot, it will not affect the results,
             and the extension is not case sensititve.
@@ -662,23 +663,23 @@
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.MaximumFileAgeDays">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.MaximumFileAgeDays">
             <summary>
             Gets or sets the maximum age of log files (in a decimal number of days) to keep when cleaning the log directory.
             </summary>
             <remarks>
             <para>
-            Either this value or CleaningMaximumDirectorySize must be specified or no cleaning will be performed.
-            If this value is blank, then cleaning will only be done according to the CleaningMaximumDirectorySize parameter.
+            Either this value or MaximumDirectorySize must be specified or no cleaning will be performed.
+            If this value is blank, then cleaning will only be done according to the MaximumDirectorySize parameter.
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.MaxFileAgeDays">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.MaxFileAgeDays">
             <summary>
             The numeric equivalent of MaximumFileAgeDays
             </summary>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.MaximumDirectorySize">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.MaximumDirectorySize">
             <summary>
             Gets or sets the maximum allowed size of the log directory in bytes for all log files found.
             </summary>
@@ -687,17 +688,17 @@
             If this value is specified, then log files (from oldest to newest) will be deleted until the total size
             of log files is less than the directory maximum.  This parameter must be an integer optionally suffixed 
             with KB, MB, or GB.  For example, 100MB specifies a maxmimum directory size of 100 megabytes.
-            Either this value or CleaningMaximumFileAgeDays must be specified or no cleaning will be performed.
-            If this value is blank, then cleaning will only be done according to the CleaningMaximumFileAgeDays parameter.
+            Either this value or MaximumFileAgeDays must be specified or no cleaning will be performed.
+            If this value is blank, then cleaning will only be done according to the MaximumFileAgeDays parameter.
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.MaxDirectorySize">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.MaxDirectorySize">
             <summary>
             The numeric equivalent of the string property MaximumDirectorySize
             </summary>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.PeriodMinutes">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.PeriodMinutes">
             <summary>
             Gets or sets the decimal number of minutes to wait between directory cleaning checks.
             </summary>
@@ -709,7 +710,7 @@
             </para>
             </remarks>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.LogCleaner.WaitType">
+        <member name="P:UGTS.Log4NetCleaner.LogCleaner.WaitType">
             <summary>
             Gets or sets the type of waiting to do when cleaning the log directory.
             </summary>
@@ -721,144 +722,83 @@
             </para>
             </remarks>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogCleaner.TryCleanup">
+        <member name="M:UGTS.Log4NetCleaner.LogCleaner.TryCleanup">
             <summary>
             meant for internal use only
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogCleaner.Cleanup">
+        <member name="M:UGTS.Log4NetCleaner.LogCleaner.Cleanup">
             <summary>
             call this to explicitly trigger a cleaning of the log directory
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogCleaner.IsDueForCleaning(System.DateTime)">
+        <member name="M:UGTS.Log4NetCleaner.LogCleaner.IsDueForCleaning(System.DateTime)">
             <summary>
             true if the next logging call will trigger a cleaning of the log directory
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogCleaner.InferFileExtension(System.String)">
+        <member name="M:UGTS.Log4NetCleaner.LogCleaner.InferFileExtension(System.String)">
             <summary>
             Infers the file extension from the given log file
             </summary>
         </member>
-        <member name="T:UGTS.Log4Net.Extensions.WaitType">
+        <member name="T:UGTS.Log4NetCleaner.WaitType">
             <summary>
             The waiting strategy to use when running tasks
             </summary>
         </member>
-        <member name="F:UGTS.Log4Net.Extensions.WaitType.Never">
+        <member name="F:UGTS.Log4NetCleaner.WaitType.Never">
             <summary>
             Never wait for the task to complete - run asynchronously
             </summary>
         </member>
-        <member name="F:UGTS.Log4Net.Extensions.WaitType.Always">
+        <member name="F:UGTS.Log4NetCleaner.WaitType.Always">
             <summary>
             Always wait for the task to complete - run synchronously
             </summary>
         </member>
-        <member name="T:UGTS.Log4Net.Extensions.WebRequestIdPatternConverter">
-            <summary>
-            Writes an auto-increment context id which is unique per http request and managed thread
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.WebRequestIdPatternConverter.Convert(System.IO.TextWriter,System.Object)">
-            <summary>
-            Writes an auto-increment context id which is unique per http request and managed thread
-            </summary>
-        </member>
-        <member name="T:UGTS.Log4Net.Extensions.ExtendedPatternLayout">
-            <summary>
-            adds support for the reqid pattern key, which evaluates to a unique incrementing id
-            for each distinct http context (web request), or 0 if not in the context of a web request.
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.ExtendedPatternLayout.#ctor">
-            <summary>
-            default constructor
-            </summary>
-        </member>
-        <member name="T:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender">
+        <member name="T:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender">
             <summary>
             A self-cleaning rolling file appender which can clean old files out of its log output directory.
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.#ctor">
+        <member name="M:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.#ctor">
             <summary>
             </summary>
         </member>
-        <member name="P:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.Cleaner">
+        <member name="P:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.Cleaner">
             <summary>
             Sets the options used for cleaning log files
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.ActivateOptions">
+        <member name="M:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.ActivateOptions">
             <summary>
             meant for internal use only
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.Append(log4net.Core.LoggingEvent)">
+        <member name="M:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.Append(log4net.Core.LoggingEvent)">
             <summary>
             meant for internal use only
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.Append(log4net.Core.LoggingEvent[])">
+        <member name="M:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.Append(log4net.Core.LoggingEvent[])">
             <summary>
             meant for internal use only
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.UGTS#Log4Net#Extensions#Interfaces#ISelfCleaningRollingFileAppender#ActivateOptionsBase">
+        <member name="M:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.UGTS#Log4NetCleaner#Interfaces#ISelfCleaningRollingFileAppender#ActivateOptionsBase">
             <summary>
             meant for internal use only
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.UGTS#Log4Net#Extensions#Interfaces#ISelfCleaningRollingFileAppender#AppendBase(log4net.Core.LoggingEvent)">
+        <member name="M:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.UGTS#Log4NetCleaner#Interfaces#ISelfCleaningRollingFileAppender#AppendBase(log4net.Core.LoggingEvent)">
             <summary>
             meant for internal use only
             </summary>
         </member>
-        <member name="M:UGTS.Log4Net.Extensions.SelfCleaningRollingFileAppender.UGTS#Log4Net#Extensions#Interfaces#ISelfCleaningRollingFileAppender#AppendBase(log4net.Core.LoggingEvent[])">
+        <member name="M:UGTS.Log4NetCleaner.SelfCleaningRollingFileAppender.UGTS#Log4NetCleaner#Interfaces#ISelfCleaningRollingFileAppender#AppendBase(log4net.Core.LoggingEvent[])">
             <summary>
             meant for internal use only
-            </summary>
-        </member>
-        <member name="T:UGTS.Log4Net.Extensions.LogExtensions">
-            <summary>
-            ILog extensions methods
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogExtensions.WithLevel(log4net.ILog,log4net.Core.Level,System.String)">
-            <summary>
-            Logs a message at the specified level chosen at runtime.
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogExtensions.Fatal(log4net.ILog,System.Func{System.String})">
-            <summary>
-            Syntactic sugar for if (log.Is[Level]Enabled) log.[Level](generator());
-            Takes care to preserve any call stack information output in the logs.
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogExtensions.Error(log4net.ILog,System.Func{System.String})">
-            <summary>
-            Syntactic sugar for if (log.Is[Level]Enabled) log.[Level](generator());
-            Takes care to preserve any call stack information output in the logs.
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogExtensions.Warn(log4net.ILog,System.Func{System.String})">
-            <summary>
-            Syntactic sugar for if (log.Is[Level]Enabled) log.[Level](generator());
-            Takes care to preserve any call stack information output in the logs.
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogExtensions.Info(log4net.ILog,System.Func{System.String})">
-            <summary>
-            Syntactic sugar for if (log.Is[Level]Enabled) log.[Level](generator());
-            Takes care to preserve any call stack information output in the logs.
-            </summary>
-        </member>
-        <member name="M:UGTS.Log4Net.Extensions.LogExtensions.Debug(log4net.ILog,System.Func{System.String})">
-            <summary>
-            Syntactic sugar for if (log.Is[Level]Enabled) log.[Level](generator());
-            Takes care to preserve any call stack information output in the logs.
             </summary>
         </member>
     </members>

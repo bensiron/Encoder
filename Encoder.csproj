@@ -90,15 +90,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UGTS, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.1.0.6\lib\net40\UGTS.dll</HintPath>
+      <HintPath>packages\UGTS.1.0.7\lib\net40\UGTS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UGTS.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\UGTS.Core.1.0.0\lib\net40\UGTS.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="UGTS.Log4Net.Extensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.Log4Net.Extensions.1.2.4\lib\net40\UGTS.Log4Net.Extensions.dll</HintPath>
+    <Reference Include="UGTS.Log4NetCleaner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UGTS.Log4NetCleaner.1.0.0\lib\net40\UGTS.Log4NetCleaner.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
