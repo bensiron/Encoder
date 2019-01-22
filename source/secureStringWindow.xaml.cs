@@ -1,27 +1,26 @@
-using JetBrains.Annotations;
 using System;
 using System.Security.Cryptography;
 using System.Windows;
 using UGTS.Crypto;
 using UGTS.Exceptions;
-using UGTS.UI;
+using UGTS.WPF;
 
 namespace UGTS.Encoder
 {
-	public partial class SecureStringWindow
-	{
-        [UsedImplicitly] public Observable<string> Username { get; set; }
-	    [UsedImplicitly] public Observable<string> Password { get; set; }
-	    [UsedImplicitly] public Observable<string> Plaintext { get; set; }
-        [UsedImplicitly] public Observable<string> Ciphertext { get; set; }
-        [UsedImplicitly] public Observable<string> Setting { get; set; }
-        [UsedImplicitly] public Observable<bool> SystemAccount { get; set; }
-        [UsedImplicitly] public Observable<bool> ShowPassword { get; set; }
-        [UsedImplicitly] public Computed<bool> IsPasswordEnabled { get; set; }
-        [UsedImplicitly] public Computed<Visibility> IsPasswordVisible { get; set; }
-        [UsedImplicitly] public Computed<Visibility> IsPasswordTextVisible { get; set; }
-        [UsedImplicitly] public Computed<bool> IsEncodeEnabled { get; set; }
-        [UsedImplicitly] public Computed<bool> IsDecodeEnabled { get; set; }
+	public partial class SecureStringWindow : UgtsWindow
+    {
+        public Observable<string> Username { get; set; }
+	    public Observable<string> Password { get; set; }
+	    public Observable<string> Plaintext { get; set; }
+        public Observable<string> Ciphertext { get; set; }
+        public Observable<string> Setting { get; set; }
+        public Observable<bool> SystemAccount { get; set; }
+        public Observable<bool> ShowPassword { get; set; }
+        public Computed<bool> IsPasswordEnabled { get; set; }
+        public Computed<Visibility> IsPasswordVisible { get; set; }
+        public Computed<Visibility> IsPasswordTextVisible { get; set; }
+        public Computed<bool> IsEncodeEnabled { get; set; }
+        public Computed<bool> IsDecodeEnabled { get; set; }
 
         public SecureStringWindow() 
 		{
@@ -138,12 +137,9 @@ namespace UGTS.Encoder
             return ex;
         }
 
-        private bool HasValidUser
-        {
-            get { return !(Username.Value.XIsBlank() || (IsPasswordEnabled && Password.Value.XIsBlank())); }
-        }
-        
-        private void Impersonate(bool bImpersonate)
+        private bool HasValidUser => !(Username.Value.XIsBlank() || (IsPasswordEnabled && Password.Value.XIsBlank()));
+
+	    private void Impersonate(bool bImpersonate)
         {
             if (bImpersonate) MLogin.Impersonate(Username, Password, true);
             else MLogin.Clear();

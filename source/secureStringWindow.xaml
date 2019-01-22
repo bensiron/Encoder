@@ -1,7 +1,7 @@
 ﻿<ugts:UgtsWindow x:Class="UGTS.Encoder.SecureStringWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ugts="clr-namespace:UGTS.UI;assembly=UGTS"        
+    xmlns:ugts="clr-namespace:UGTS.WPF;assembly=UGTS.WPF"        
     Title="Secure String Encoder" Height="284" Width="521" MinWidth="353" MinHeight="224">
     
     <Grid TextOptions.TextFormattingMode="Display" HorizontalAlignment="Stretch" Margin="0,3,0,-4" RenderTransformOrigin="0.473,0.714">

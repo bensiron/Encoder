@@ -16,7 +16,8 @@ namespace UGTS.Encoder
             XmlConfigurator.Configure();
             log.Info("run begin");
 
-            MUI.Run(Run, "Encoder", "encoder.ico");
+            MUI.Run(Run, "Encoder");
+            WPF.MMain.IconPath = "encoder.ico";
 
             log.Info("run end");
         }

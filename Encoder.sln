@@ -9,6 +9,8 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Debug32|Any CPU = Debug32|Any CPU
+		Debug32|x86 = Debug32|x86
 		Debug64|Any CPU = Debug64|Any CPU
 		Debug64|x86 = Debug64|x86
 		Release|Any CPU = Release|Any CPU
@@ -18,6 +20,10 @@ Global
 		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug32|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug32|Any CPU.Build.0 = Debug|Any CPU
+		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug32|x86.ActiveCfg = Debug|Any CPU
+		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug32|x86.Build.0 = Debug|Any CPU
 		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug64|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug64|Any CPU.Build.0 = Debug|Any CPU
 		{2BA3DC84-0606-436F-9FB4-320238FAF6F2}.Debug64|x86.ActiveCfg = Debug|Any CPU

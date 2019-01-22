@@ -11,7 +11,7 @@
     <AssemblyName>Encoder</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <NoWarn>1591</NoWarn>
     <SccProjectName>
     </SccProjectName>
@@ -64,9 +64,6 @@
     <ApplicationIcon>encoder.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="JetBrains.Annotations">
-      <HintPath>..\..\EXT\Nugetter\bin\Redist\JetBrains.Annotations.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
@@ -90,15 +87,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UGTS, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.1.0.7\lib\net40\UGTS.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UGTS.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.Core.1.0.0\lib\net40\UGTS.Core.dll</HintPath>
+      <HintPath>packages\UGTS.2.0.1\lib\net40\UGTS.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="UGTS.Log4NetCleaner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.Log4NetCleaner.1.0.0\lib\net40\UGTS.Log4NetCleaner.dll</HintPath>
+      <HintPath>packages\UGTS.Log4NetCleaner.1.0.1\lib\net40\UGTS.Log4NetCleaner.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="UGTS.WPF, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\UGTS.WPF.2.0.1\lib\net40\UGTS.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
