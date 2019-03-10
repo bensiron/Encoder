@@ -8,18 +8,18 @@ namespace UGTS.Encoder
 {
     public static class MGlobal
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof (MGlobal));
+        private static readonly ILog Log = LogManager.GetLogger(typeof (MGlobal));
 
         [STAThread]
         public static void Main()
         {
             XmlConfigurator.Configure();
-            log.Info("run begin");
+            Log.Info("run begin");
 
-            MUI.Run(Run, "Encoder");
             WPF.MMain.IconPath = "encoder.ico";
+            MUI.Run(Run, "Encoder");
 
-            log.Info("run end");
+            Log.Info("run end");
         }
 
         private static void Run()

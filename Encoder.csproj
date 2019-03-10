@@ -86,16 +86,8 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="UGTS, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.2.0.1\lib\net40\UGTS.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="UGTS.Log4NetCleaner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\UGTS.Log4NetCleaner.1.0.1\lib\net40\UGTS.Log4NetCleaner.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="UGTS.WPF, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.WPF.2.0.1\lib\net40\UGTS.WPF.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
@@ -129,7 +121,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="deploy.ps1" />
-    <None Include="doc\ChangeLog.xlsm" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -140,6 +131,16 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="license\license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UGTS\source\UGTS.WPF\UGTS.WPF.csproj">
+      <Project>{6502bc00-1d05-4318-af5d-5b5172c43575}</Project>
+      <Name>UGTS.WPF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\UGTS\source\UGTS\UGTS.csproj">
+      <Project>{f4a49e74-68c8-4c80-accb-df2a10d10b3d}</Project>
+      <Name>UGTS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
