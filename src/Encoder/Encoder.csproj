@@ -58,7 +58,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>UGTS.Encoder.MGlobal</StartupObject>
+    <StartupObject>UGTS.Encoder.ProgramEntry</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>encoder.ico</ApplicationIcon>
@@ -86,18 +86,16 @@
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="UGTS.Log4NetCleaner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\UGTS.Log4NetCleaner.1.0.1\lib\net40\UGTS.Log4NetCleaner.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Info.cs" />
-    <Compile Include="source\secureStringWindow.xaml.cs">
-      <DependentUpon>secureStringWindow.xaml</DependentUpon>
+    <Compile Include="source\DpapiExtensions.cs" />
+    <Compile Include="source\ExceptionExtensions.cs" />
+    <Compile Include="source\SecureStringWindow.xaml.cs">
+      <DependentUpon>SecureStringWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="source\global.cs" />
+    <Compile Include="source\ProgramEntry.cs" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -124,7 +122,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="source\secureStringWindow.xaml">
+    <Page Include="source\SecureStringWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,8 +1,6 @@
 using System;
 using System.Security.Cryptography;
 using System.Windows;
-using UGTS.Crypto;
-using UGTS.Exceptions;
 using UGTS.WPF;
 
 namespace UGTS.Encoder
@@ -32,8 +30,8 @@ namespace UGTS.Encoder
             SystemAccount = new Observable<bool>(false);
             ShowPassword = new Observable<bool>(false);
             IsPasswordEnabled = new Computed<bool>(() => !(IsSystemUser() || IsCurrentUser()));
-            IsPasswordVisible = new Computed<Visibility>(() => (!ShowPassword).XToVisibility());
-            IsPasswordTextVisible = new Computed<Visibility>(() => ShowPassword.Value.XToVisibility());
+            IsPasswordVisible = new Computed<Visibility>(() => ToVisibility(!ShowPassword));
+            IsPasswordTextVisible = new Computed<Visibility>(() => ToVisibility(ShowPassword.Value));
             IsEncodeEnabled = new Computed<bool>(() => HasValidUser && !Plaintext.Value.XIsBlank());
             IsDecodeEnabled = new Computed<bool>(() => HasValidUser && !(Ciphertext.Value.XIsBlank() && Setting.Value.XIsBlank()));
             Username.ValueChanged += HValueChanged;
@@ -47,6 +45,14 @@ namespace UGTS.Encoder
             Activated += HActivate;
 			InitializeComponent();
 		}
+
+        /// <summary>
+        /// Converts a boolean into a Windows.Visibility value in the standard way
+        /// </summary>
+        private static Visibility ToVisibility(bool v)
+        {
+            return v ? Visibility.Visible : Visibility.Hidden;
+        }
 
         private void HValueChanged(ObservableBase sender, ValueChangedEventArgs<string> e)
         {
@@ -77,7 +83,7 @@ namespace UGTS.Encoder
             }
             catch (Exception ex)
             {
-                ex.XHandle("encrypting plaintext");
+                ex.Show("encrypting plaintext");
             }
             finally
             {
@@ -95,12 +101,9 @@ namespace UGTS.Encoder
             Clipboard.SetText(Setting);
         }
 
-        private DataProtectionScope ProtectionScope
-        {
-            get { return IsSystemUser() ? DataProtectionScope.LocalMachine : DataProtectionScope.CurrentUser; }
-        }
+        private DataProtectionScope ProtectionScope => IsSystemUser() ? DataProtectionScope.LocalMachine : DataProtectionScope.CurrentUser;
 
-        private void HDecode(object sender, EventArgs e)
+	    private void HDecode(object sender, EventArgs e)
         {
             try
             {
@@ -113,16 +116,15 @@ namespace UGTS.Encoder
                         var xml = MXml.LoadText(Setting);
                         ct = xml.X("value");
                     }
-                    catch { throw MException.MessageException("Setting xml tag is not valid."); }
+                    catch { throw new Exception("Setting xml tag is not valid."); }
  
-                    if (ct.XIsBlank()) throw MException.MessageException("Setting xml tag had no value attribute.");
+                    if (ct.XIsBlank()) throw new Exception("Setting xml tag had no value attribute.");
                 }
                 Plaintext.Value = ct.XDecrypt();
             }
             catch (Exception ex)
             {
-                ex = AnalyzeException(ex);
-                ex.XHandle("decrypting");
+                AnalyzeException(ex).Show("decrypting");
             }
             finally
             {
@@ -132,8 +134,8 @@ namespace UGTS.Encoder
 
         private static Exception AnalyzeException(Exception ex)
         {
-            if (ex.Message.StartsWith("Key not valid in specified state")) ex = MException.MessageException(ex.Message + " - please verify that the username matches the user originally used to create this secure string.");
-            if (ex.Message.Contains("data is invalid")) ex = MException.MessageException("The ciphertext data blob is invalid.");
+            if (ex.Message.StartsWith("Key not valid in specified state")) ex = new Exception(ex.Message + " - please verify that the username matches the user originally used to create this secure string.");
+            if (ex.Message.Contains("data is invalid")) ex = new Exception("The ciphertext data blob is invalid.");
             return ex;
         }
 
@@ -156,8 +158,9 @@ namespace UGTS.Encoder
                 case "networkservice":
                 case "localservice":
                     return true;
+                default:
+                    return false;
             }
-            return false;
         }
 
         private bool IsCurrentUser(string user = "")

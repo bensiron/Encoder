@@ -3,15 +3,14 @@
 // all original content except for the encoder icon, taken from openclipart.org icon 'Padlock' by AJ
 
 using System;
-using UGTS;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("UGTS Encoder")]
 [assembly: AssemblyDescription("UGTS Encoder")]
 [assembly: AssemblyProduct("UGTS Encoder")]
-[assembly: AssemblyCompany(MGlobal.CompanyName)]
-[assembly: AssemblyCopyright(MGlobal.CopyrightNotice)]
+[assembly: AssemblyCompany("UGTS")]
+[assembly: AssemblyCopyright("MIT License - Ben Siron - see license.txt")]
 [assembly: AssemblyTrademark("")]
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(false)]

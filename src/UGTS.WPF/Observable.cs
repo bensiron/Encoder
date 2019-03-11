@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using UGTS.Dictionaries;
 
 // MIT License - Ben Siron
 
@@ -35,15 +34,15 @@ namespace UGTS.WPF
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// set of all computed observables which depend on this observable - only the keys are important - the values are null.
+        /// all computed observables which depend on this observable
         /// </summary>
-        private SafeDictionary<ObservableBase, object> myDependents = new SafeDictionary<ObservableBase, object>();
+        private readonly List<ObservableBase> _dependents = new List<ObservableBase>();
 
         /// <summary>
         /// reference-count applied to all computed observables - a positive number means that the computed is currently being watched.
         /// </summary>
         [ThreadStatic]
-        private static SafeDictionary<ObservableBase, int> theWatchingOnThisThread;
+        private static Dictionary<ObservableBase, int> _watchingOnThisThread;
 
         protected static void StartWatching(ObservableBase computed)
         {
@@ -57,18 +56,27 @@ namespace UGTS.WPF
 
         private static void Watch(ObservableBase computed, bool start)
         {
-            if (theWatchingOnThisThread == null) theWatchingOnThisThread = new SafeDictionary<ObservableBase, int>();
-            theWatchingOnThisThread[computed] += start ? 1 : -1;
-            if (!start && (theWatchingOnThisThread[computed] <= 0))
-                theWatchingOnThisThread.Remove(computed);
+            if (_watchingOnThisThread == null)
+            {
+                _watchingOnThisThread = new Dictionary<ObservableBase, int>();
+            }
+
+            if (!_watchingOnThisThread.ContainsKey(computed))
+            {
+                _watchingOnThisThread[computed] = 0;
+            }
+
+            _watchingOnThisThread[computed] += start ? 1 : -1;
+            if (!start && (_watchingOnThisThread[computed] <= 0))
+                _watchingOnThisThread.Remove(computed);
         }
 
         protected static IEnumerable<ObservableBase> WatchingOnThisThread
         {
             get
             {
-                if (theWatchingOnThisThread == null) theWatchingOnThisThread = new SafeDictionary<ObservableBase, int>();
-                return theWatchingOnThisThread.Keys;
+                if (_watchingOnThisThread == null) _watchingOnThisThread = new Dictionary<ObservableBase, int>();
+                return _watchingOnThisThread.Keys;
             }
         }
 
@@ -77,16 +85,16 @@ namespace UGTS.WPF
             // if any computed objects are currently being watched and have not thus far been noted as dependent, mark them now.
             foreach (var dependant in WatchingOnThisThread)
             {
-                if (!myDependents.ContainsKey(dependant))
-                    myDependents[dependant] = null;
+                if (!_dependents.Contains(dependant))
+                    _dependents.Add(dependant);
             }
         }
 
         protected void UpdateDependents(object changes)
         {
-            foreach (var dependant in myDependents.Keys)
+            foreach (var d in _dependents)
             {
-                dependant.OnValueChanged(changes);
+                d.OnValueChanged(changes);
             }
         }
 
@@ -103,18 +111,18 @@ namespace UGTS.WPF
         public EqualityComparer<T> EqualityComparer;
         public event ValueChangedEventHandler<T> ValueChanged;
 
-        protected T myValue, myOldValue;
+        protected T InternalValue, OldInternalValue;
 
         public Observable()
         {
             Value = default(T);
-            myOldValue = myValue;
+            OldInternalValue = InternalValue;
         }
 
         public Observable(T initialValue)
         {
             Value = initialValue;
-            myOldValue = myValue;
+            OldInternalValue = InternalValue;
         }
 
         /// <summary>
@@ -127,7 +135,7 @@ namespace UGTS.WPF
 
         private bool IsEqual(T value)
         {
-            return EqualityComparer?.Invoke(myValue, value) ?? Object.Equals(myValue, value);
+            return EqualityComparer?.Invoke(InternalValue, value) ?? Object.Equals(InternalValue, value);
         }
 
         public virtual T Value
@@ -135,14 +143,14 @@ namespace UGTS.WPF
             get
             {
                 AddDependents();
-                return myValue;
+                return InternalValue;
             }
             set
             {
                 if (IsEqual(value)) return;
-                myOldValue = myValue;
-                myValue = value;
-                var changes = new ValueChangedEventArgs<T>(myOldValue, myValue);
+                OldInternalValue = InternalValue;
+                InternalValue = value;
+                var changes = new ValueChangedEventArgs<T>(OldInternalValue, InternalValue);
                 OnValueChanged(changes);
                 UpdateDependents(changes);
             }
@@ -150,50 +158,48 @@ namespace UGTS.WPF
 
         protected override void OnValueChanged(object changes)
         {
-            if (ValueChanged != null)
-                ValueChanged(this, (ValueChangedEventArgs<T>)changes);
-
+            ValueChanged?.Invoke(this, (ValueChangedEventArgs<T>)changes);
             OnPropertyChanged("Value");
         }
     }
 
     public class Computed<T> : Observable<T>
     {
-        private Func<T> myComputed;
+        private readonly Func<T> _computed;
 
         public Computed(Func<T> func)
         {
-            myComputed = func;
-            myValue = Value; // this serves to initialize dependencies
+            _computed = func;
+            InternalValue = Value; // this serves to initialize dependencies
         }
 
         public override T Value
         {
             get
             {
-                myValue = default(T);
+                InternalValue = default(T);
                 try
                 {
-                    if (myComputed != null)
+                    if (_computed != null)
                     {
                         StartWatching(this);
-                        myValue = myComputed();
+                        InternalValue = _computed();
                     }
                 }
                 finally
                 {
-                    if (myComputed != null)
+                    if (_computed != null)
                         StopWatching(this);
                 }
 
-                myOldValue = myValue;
-                return myValue;
+                OldInternalValue = InternalValue;
+                return InternalValue;
             }
         }
 
         protected override void OnValueChanged(object changes)
         {
-            var before = myOldValue;
+            var before = OldInternalValue;
             var computedChanges = new ValueChangedEventArgs<T>(before, Value);
             base.OnValueChanged(computedChanges);
         }

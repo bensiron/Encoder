@@ -47,42 +47,13 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="controls.cs" />
-    <Compile Include="DatabaseChooser.xaml.cs">
-      <DependentUpon>DatabaseChooser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Info.cs" />
-    <Compile Include="media.cs" />
-    <Compile Include="MessageWindow.xaml.cs">
-      <DependentUpon>MessageWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="MathExtensions.cs" />
+    <Compile Include="MediaExtensions.cs" />
     <Compile Include="Observable.cs" />
-    <Compile Include="secureTextbox.cs" />
-    <Compile Include="ugtsWindow.cs" />
-    <Compile Include="UserLogin.xaml.cs">
-      <DependentUpon>UserLogin.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="PasswordBoxAssistant.cs" />
+    <Compile Include="UgtsWindow.cs" />
     <Compile Include="Main.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="DatabaseChooser.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MessageWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UserLogin.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\UGTS\source\UGTS\UGTS.csproj">
-      <Project>{f4a49e74-68c8-4c80-accb-df2a10d10b3d}</Project>
-      <Name>UGTS</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

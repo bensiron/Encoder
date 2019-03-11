@@ -4,8 +4,7 @@ using System.Windows.Media;
 
 namespace UGTS.WPF
 {
-
-    static class MMedia
+    static class MediaExtensions
 	{
 		/// <summary>
 		/// reads the given stream into a bitmap, closes the stream, and returns the bitmap
@@ -21,10 +20,9 @@ namespace UGTS.WPF
 		        return null;
 		    } 
             finally
-            {
-				if (stream != null)
-					stream.Close();
-			}
+		    {
+		        stream?.Close();
+		    }
 		}
 
 		/// <summary>
@@ -32,7 +30,7 @@ namespace UGTS.WPF
 		/// </summary>
 		public static Color XBlend(this Color c1, Color c2, double fraction)
 		{
-			Color c = default(Color);
+			var c = default(Color);
 			c.A = Convert.ToByte(Blend(c1.A, c2.A, fraction).XLimit(0, 255));
 			c.R = Convert.ToByte(Blend(c1.R, c2.R, fraction).XLimit(0, 255));
 			c.G = Convert.ToByte(Blend(c1.G, c2.G, fraction).XLimit(0, 255));
@@ -44,8 +42,5 @@ namespace UGTS.WPF
 		{
 			return a + (b - a) * fraction;
 		}
-
 	}
-
-
 }

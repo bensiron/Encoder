@@ -52,10 +52,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\UGTS\source\UGTS\UGTS.csproj">
-      <Project>{f4a49e74-68c8-4c80-accb-df2a10d10b3d}</Project>
-      <Name>UGTS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UGTS.WPF\UGTS.WPF.csproj">
       <Project>{6502bc00-1d05-4318-af5d-5b5172c43575}</Project>
       <Name>UGTS.WPF</Name>
