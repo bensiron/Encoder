@@ -77,15 +77,15 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Abstractions, Version=2.0.0.141, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\System.IO.Abstractions.2.0.0.141\lib\net40\System.IO.Abstractions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="UGTS.Log4NetCleaner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\UGTS.Log4NetCleaner.1.0.1\lib\net40\UGTS.Log4NetCleaner.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -122,8 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="deploy.ps1" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="source\SecureStringWindow.xaml">
