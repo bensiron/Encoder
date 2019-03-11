@@ -1,9 +1,5 @@
 // UGTS (Ben Siron) licenses this work under the MIT license
 
-// UGTS Base class library
-//------------------------------------
-// All original work
-
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
