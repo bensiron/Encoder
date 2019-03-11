@@ -53,7 +53,9 @@ namespace UGTS.Encoder
             _profile.UserName = _userName.ToString();
 
             if (!WinApi.LoadUserProfile(_token, ref _profile))
-                throw new Exception("loading user profile");
+            {
+                throw WinApi.Win32Exception("loading user profile");
+            }
 
             _isProfileLoaded = true;
         }

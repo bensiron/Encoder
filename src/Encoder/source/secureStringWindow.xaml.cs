@@ -71,7 +71,7 @@ namespace UGTS.Encoder
             }
             catch (Exception ex)
             {
-                ex.Show("encrypting plaintext");
+                AnalyzeException(ex).Show("encrypting plaintext");
             }
             finally
             {
@@ -111,8 +111,9 @@ namespace UGTS.Encoder
 
         private static Exception AnalyzeException(Exception ex)
         {
-            if (ex.Message.StartsWith("Key not valid in specified state")) ex = new Exception(ex.Message + " - please verify that the username matches the user originally used to create this secure string.");
+            if (ex.Message.Contains("Key not valid for use in specified state")) ex = new Exception(ex.Message + "Please verify that the username matches the user that was originally used to create this secure string.");
             if (ex.Message.Contains("data is invalid")) ex = new Exception("The ciphertext data blob is invalid.");
+            if (ex.Message.Contains("privilege is not held")) ex = new Exception(ex.Message + " - try exiting and re-running Encoder with elevated privileges.");
             return ex;
         }
 
