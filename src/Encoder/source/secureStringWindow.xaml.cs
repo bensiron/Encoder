@@ -11,7 +11,6 @@ namespace UGTS.Encoder
 	    public Observable<string> Password { get; set; }
 	    public Observable<string> Plaintext { get; set; }
         public Observable<string> Ciphertext { get; set; }
-        public Observable<string> Setting { get; set; }
         public Observable<bool> SystemAccount { get; set; }
         public Observable<bool> ShowPassword { get; set; }
         public Computed<bool> IsPasswordEnabled { get; set; }
@@ -26,14 +25,13 @@ namespace UGTS.Encoder
             Password = new Observable<string>("");
             Plaintext = new Observable<string>("");
             Ciphertext = new Observable<string>("");
-            Setting = new Observable<string>("");
             SystemAccount = new Observable<bool>(false);
             ShowPassword = new Observable<bool>(false);
             IsPasswordEnabled = new Computed<bool>(() => !(IsSystemUser() || IsCurrentUser()));
             IsPasswordVisible = new Computed<Visibility>(() => ToVisibility(!ShowPassword));
             IsPasswordTextVisible = new Computed<Visibility>(() => ToVisibility(ShowPassword.Value));
             IsEncodeEnabled = new Computed<bool>(() => HasValidUser && !Plaintext.Value.XIsBlank());
-            IsDecodeEnabled = new Computed<bool>(() => HasValidUser && !(Ciphertext.Value.XIsBlank() && Setting.Value.XIsBlank()));
+            IsDecodeEnabled = new Computed<bool>(() => HasValidUser && !Ciphertext.Value.XIsBlank());
             Username.ValueChanged += HValueChanged;
             Password.ValueChanged += HValueChanged;
             Plaintext.ValueChanged += HValueChanged;
@@ -69,17 +67,7 @@ namespace UGTS.Encoder
             {
                 if (IsPasswordEnabled) Impersonate(true);
                 Ciphertext.Value = Plaintext.Value.XEncrypt(ProtectionScope);
-                var name = Setting.Value.Trim();
-                if (name.StartsWith("<"))
-                {
-                    var d = MXml.LoadText(name);
-                    name = d.X("key");
-                }
-                var pos = name.IndexOf(':');
-                if (pos >= 0) name = name.Substring(0, pos);
-                Setting.Value = "<add key=\"" + name + ":" + Username + "\" value=\"" + Ciphertext + "\"/>";
                 CopyToClipboard();
-
             }
             catch (Exception ex)
             {
@@ -98,7 +86,7 @@ namespace UGTS.Encoder
 
         private void CopyToClipboard()
         {
-            Clipboard.SetText(Setting);
+            Clipboard.SetText(Ciphertext.Value);
         }
 
         private DataProtectionScope ProtectionScope => IsSystemUser() ? DataProtectionScope.LocalMachine : DataProtectionScope.CurrentUser;
@@ -109,17 +97,6 @@ namespace UGTS.Encoder
             {
                 if (IsPasswordEnabled) Impersonate(true);
                 var ct = Ciphertext.Value;
-                if (ct.XIsBlank() && !Setting.Value.XIsBlank())                
-                {
-                    try 
-                    {
-                        var xml = MXml.LoadText(Setting);
-                        ct = xml.X("value");
-                    }
-                    catch { throw new Exception("Setting xml tag is not valid."); }
- 
-                    if (ct.XIsBlank()) throw new Exception("Setting xml tag had no value attribute.");
-                }
                 Plaintext.Value = ct.XDecrypt();
             }
             catch (Exception ex)
@@ -143,8 +120,8 @@ namespace UGTS.Encoder
 
 	    private void Impersonate(bool bImpersonate)
         {
-            if (bImpersonate) MLogin.Impersonate(Username, Password, true);
-            else MLogin.Clear();
+            if (bImpersonate) LoginExtensions.Impersonate(Username, Password, true);
+            else LoginExtensions.Clear();
         }
 
         private bool IsSystemUser(string user = "")

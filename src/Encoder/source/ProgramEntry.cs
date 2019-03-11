@@ -7,7 +7,7 @@ namespace UGTS.Encoder
 {
     public static class ProgramEntry
     {
-        private static readonly ILog Log = LogManager.GetLogger(typeof (MGlobal));
+        private static readonly ILog Log = LogManager.GetLogger(typeof (ProgramEntry));
 
         [STAThread]
         public static void Main()

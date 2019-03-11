@@ -92,10 +92,12 @@
     <Compile Include="Info.cs" />
     <Compile Include="source\DpapiExtensions.cs" />
     <Compile Include="source\ExceptionExtensions.cs" />
+    <Compile Include="source\LoginExtensions.cs" />
     <Compile Include="source\SecureStringWindow.xaml.cs">
       <DependentUpon>SecureStringWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="source\ProgramEntry.cs" />
+    <Compile Include="source\StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -128,10 +130,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\UGTS\source\UGTS\UGTS.csproj">
-      <Project>{f4a49e74-68c8-4c80-accb-df2a10d10b3d}</Project>
-      <Name>UGTS</Name>
-    </ProjectReference>
     <ProjectReference Include="..\UGTS.WPF\UGTS.WPF.csproj">
       <Project>{6502bc00-1d05-4318-af5d-5b5172c43575}</Project>
       <Name>UGTS.WPF</Name>

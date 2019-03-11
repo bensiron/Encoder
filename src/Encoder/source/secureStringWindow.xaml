@@ -15,9 +15,7 @@
         <Label Content="Plaintext:" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="64" FontSize="11" HorizontalContentAlignment="Right" />
         <TextBox Height="20" Name="plaintextEditor" Text="{Binding Path=Plaintext.Value, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="79,60,10,0" VerticalAlignment="Top" FontFamily="Lucida Console" FontSize="12" VerticalContentAlignment="Center" />
         <Label Content="Ciphertext:" HorizontalAlignment="Left" Margin="-5,82,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.079,0.12" Width="79" HorizontalContentAlignment="Right" Height="26"/>
-        <TextBox Text="{Binding Path=Ciphertext.Value, UpdateSourceTrigger=PropertyChanged}" Margin="79,85,10,65" TextWrapping="Wrap" FontFamily="Lucida Console"/>
-        <Label Content="Setting:" HorizontalAlignment="Left" Margin="10,0,0,37" Width="64" HorizontalContentAlignment="Right" Height="25" VerticalAlignment="Bottom"/>
-        <TextBox TextWrapping="NoWrap" Text="{Binding Path=Ciphertext.Value, UpdateSourceTrigger=PropertyChanged}" Margin="79,0,10,40" Height="20" VerticalAlignment="Bottom" FontFamily="Lucida Console" ClipToBounds="True" VerticalContentAlignment="Center"/>
+        <TextBox Text="{Binding Path=Ciphertext.Value, UpdateSourceTrigger=PropertyChanged}" Margin="79,85,10,38" TextWrapping="Wrap" FontFamily="Lucida Console"/>
         <Button Content="Encode" IsEnabled="{Binding Path=IsEncodeEnabled.Value}" Click="HEncode" HorizontalAlignment="Left" Margin="79,0,0,14" Width="75" Height="19" VerticalAlignment="Bottom"/>
         <Button Content="Decode" IsEnabled="{Binding Path=IsDecodeEnabled.Value}" Click="HDecode" HorizontalAlignment="Left" Margin="159,0,0,14" Width="75" Height="19" VerticalAlignment="Bottom"/>
         <Button Content="To Clipboard" Click="HClipboard" HorizontalAlignment="Left" Margin="239,0,0,14" Width="88" Height="19" VerticalAlignment="Bottom"/>
