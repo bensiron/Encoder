@@ -33,15 +33,15 @@ namespace UGTS.Encoder.WPF
             IsPasswordTextVisible = new Computed<Visibility>(() => ToVisibility(ShowPassword.Value));
             IsEncodeEnabled = new Computed<bool>(() => HasValidUser && !Plaintext.Value.IsBlank());
             IsDecodeEnabled = new Computed<bool>(() => HasValidUser && !Ciphertext.Value.IsBlank());
-            Username.ValueChanged += HValueChanged;
-            Password.ValueChanged += HValueChanged;
-            Plaintext.ValueChanged += HValueChanged;
-            Ciphertext.ValueChanged += HValueChanged;
-            SystemAccount.ValueChanged += HSystemAccountChanged;
+            Username.ValueChanged += ValueChanged;
+            Password.ValueChanged += ValueChanged;
+            Plaintext.ValueChanged += ValueChanged;
+            Ciphertext.ValueChanged += ValueChanged;
+            SystemAccount.ValueChanged += SystemAccountChanged;
 
             DataContext = this;
-            Loaded += HLoad;
-            Activated += HActivate;
+            Loaded += WindowLoaded;
+            Activated += WindowActivated;
 			InitializeComponent();
 		}
 
@@ -53,7 +53,7 @@ namespace UGTS.Encoder.WPF
             return v ? Visibility.Visible : Visibility.Hidden;
         }
 
-        private void HValueChanged(ObservableBase sender, ValueChangedEventArgs<string> e)
+        private void ValueChanged(ObservableBase sender, ValueChangedEventArgs<string> e)
         {
             var isSystemUser = IsSystemUser();
             if (isSystemUser != SystemAccount)
@@ -67,7 +67,7 @@ namespace UGTS.Encoder.WPF
             }
         }
 
-        private void HEncode(object sender, EventArgs e)
+        private void EncodeClicked(object sender, EventArgs e)
         {
             RunWithImpersonation(() =>
             {
@@ -76,7 +76,7 @@ namespace UGTS.Encoder.WPF
             }, "encrypting plaintext");
         }
 
-        private void HDecode(object sender, EventArgs e)
+        private void DecodeClicked(object sender, EventArgs e)
         {
             RunWithImpersonation(() =>
             {
@@ -106,7 +106,7 @@ namespace UGTS.Encoder.WPF
             }
         }
 
-        private void HClipboard(object sender, EventArgs e)
+        private void CopyToClipboardClicked(object sender, EventArgs e)
         {
             CopyToClipboard();
         }
@@ -151,12 +151,12 @@ namespace UGTS.Encoder.WPF
             return (user == CurrentUser().ToLower().Trim());
         }
 
-        private void HActivate(object sender, EventArgs e)
+        private void WindowActivated(object sender, EventArgs e)
         {
             plaintextEditor.Focus();
         }
 
-        private void HLoad(object sender, EventArgs e)
+        private void WindowLoaded(object sender, EventArgs e)
         {
             Username.Value = CurrentUser();
         }
@@ -166,7 +166,7 @@ namespace UGTS.Encoder.WPF
             return Environment.UserDomainName + "\\" + Environment.UserName;
         }
 
-        private void HSystemAccountChanged(ObservableBase sender, ValueChangedEventArgs<bool> e)
+        private void SystemAccountChanged(ObservableBase sender, ValueChangedEventArgs<bool> e)
         {
             Username.Value = SystemAccount ? Environment.MachineName + "\\SYSTEM" : CurrentUser();
         }
