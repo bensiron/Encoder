@@ -1,7 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
+using UGTS.Encoder.WPF;
 
-namespace UGTS.WPF.UnitTest
+namespace UGTS.Encoder.UnitTest
 {
     [TestFixture]
     public class ObservableTests

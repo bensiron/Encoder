@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "license", "license", "{499D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UGTS.WPF", "src\UGTS.WPF\UGTS.WPF.csproj", "{6502BC00-1D05-4318-AF5D-5B5172C43575}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UGTS.WPF.UnitTest", "src\UGTS.WPF.UnitTest\UGTS.WPF.UnitTest.csproj", "{9E04D2D5-0551-4727-BA03-0515AABACDA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Encoder.UnitTest", "src\UGTS.WPF.UnitTest\Encoder.UnitTest.csproj", "{9E04D2D5-0551-4727-BA03-0515AABACDA4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10D4B5BB-448C-4325-852C-ACDE84370B69}"
 	ProjectSection(SolutionItems) = preProject

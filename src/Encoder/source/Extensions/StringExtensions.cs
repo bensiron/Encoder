@@ -5,7 +5,7 @@
         /// <summary>
         /// Returns True if the given string is Nothing or blank.
         /// </summary>
-        public static bool XIsBlank(this string s)
+        public static bool IsBlank(this string s)
         {
             if (string.IsNullOrEmpty(s)) return true;
             if (!char.IsWhiteSpace(s[0])) return false;

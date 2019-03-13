@@ -1,6 +1,6 @@
 using System;
 
-namespace UGTS.Encoder
+namespace UGTS.Encoder.Windows
 {
     public class WindowsUserName
     {
@@ -18,13 +18,13 @@ namespace UGTS.Encoder
             var pos = user.IndexOf('\\');
             if (pos >= 0) { Domain = user.Substring(0, pos).Trim(); Username = user.Substring(pos + 1).Trim(); }
             else { Domain = ""; Username = user; }
-            if (Domain.XIsBlank()) Domain = Environment.UserDomainName;
-            if (Username.XIsBlank()) Username = Environment.UserName;
+            if (Domain.IsBlank()) Domain = Environment.UserDomainName;
+            if (Username.IsBlank()) Username = Environment.UserName;
         }
 
         public override string ToString()
         {
-            return (!Domain.XIsBlank() ? Domain + "\\" : "") + Username;
+            return (!Domain.IsBlank() ? Domain + "\\" : "") + Username;
         }
 
         /// <summary>

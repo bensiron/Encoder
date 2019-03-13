@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using UGTS.Encoder.WPF;
 
 namespace UGTS.Encoder
 {
@@ -10,7 +11,7 @@ namespace UGTS.Encoder
         {
             try
             {
-                WPF.MMain.IconPath = "encoder.ico";
+                IconManager.IconPath = "encoder.ico";
                 var w = new SecureStringWindow { WindowStartupLocation = WindowStartupLocation.CenterScreen };
                 w.ShowDialog();
             }

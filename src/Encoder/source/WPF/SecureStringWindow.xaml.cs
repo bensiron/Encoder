@@ -1,9 +1,10 @@
 using System;
 using System.Security.Cryptography;
 using System.Windows;
+using UGTS.Encoder.Windows;
 using UGTS.WPF;
 
-namespace UGTS.Encoder
+namespace UGTS.Encoder.WPF
 {
 	public partial class SecureStringWindow : UgtsWindow
     {
@@ -19,8 +20,9 @@ namespace UGTS.Encoder
         public Computed<bool> IsEncodeEnabled { get; set; }
         public Computed<bool> IsDecodeEnabled { get; set; }
 
-        public SecureStringWindow() 
-		{
+        public SecureStringWindow()
+        {
+            Icon = IconManager.MainIconImage;
             Username = new Observable<string>("");
             Password = new Observable<string>("");
             Plaintext = new Observable<string>("");
@@ -30,8 +32,8 @@ namespace UGTS.Encoder
             IsPasswordEnabled = new Computed<bool>(() => !(IsSystemUser() || IsCurrentUser()));
             IsPasswordVisible = new Computed<Visibility>(() => ToVisibility(!ShowPassword));
             IsPasswordTextVisible = new Computed<Visibility>(() => ToVisibility(ShowPassword.Value));
-            IsEncodeEnabled = new Computed<bool>(() => HasValidUser && !Plaintext.Value.XIsBlank());
-            IsDecodeEnabled = new Computed<bool>(() => HasValidUser && !Ciphertext.Value.XIsBlank());
+            IsEncodeEnabled = new Computed<bool>(() => HasValidUser && !Plaintext.Value.IsBlank());
+            IsDecodeEnabled = new Computed<bool>(() => HasValidUser && !Ciphertext.Value.IsBlank());
             Username.ValueChanged += HValueChanged;
             Password.ValueChanged += HValueChanged;
             Plaintext.ValueChanged += HValueChanged;
@@ -54,28 +56,54 @@ namespace UGTS.Encoder
 
         private void HValueChanged(ObservableBase sender, ValueChangedEventArgs<string> e)
         {
-            var bSys = IsSystemUser();
-            if (bSys != SystemAccount)
-                SystemAccount.Value = bSys;
+            var isSystemUser = IsSystemUser();
+            if (isSystemUser != SystemAccount)
+            {
+                SystemAccount.Value = isSystemUser;
+            }
 
-            if (!IsPasswordEnabled) ShowPassword.Value = false;
+            if (!IsPasswordEnabled)
+            {
+                ShowPassword.Value = false;
+            }
         }
 
         private void HEncode(object sender, EventArgs e)
         {
+            RunWithImpersonation(() =>
+            {
+                Ciphertext.Value = Plaintext.Value.EncryptWithDpapi(ProtectionScope);
+                CopyToClipboard();
+            }, "encrypting plaintext");
+        }
+
+        private void HDecode(object sender, EventArgs e)
+        {
+            RunWithImpersonation(() =>
+            {
+                var ct = Ciphertext.Value;
+                Plaintext.Value = ct.DecryptWithDpapi();
+            }, "decrypting");
+        }
+
+	    private void RunWithImpersonation(Action action, string description)
+	    {
             try
             {
-                if (IsPasswordEnabled) Impersonate(true);
-                Ciphertext.Value = Plaintext.Value.XEncrypt(ProtectionScope);
-                CopyToClipboard();
+                if (IsPasswordEnabled)
+                {
+                    WindowsLogin.Impersonate(Username, Password, true);
+                }
+
+                action();
             }
             catch (Exception ex)
             {
-                AnalyzeException(ex).Show("encrypting plaintext");
+                AnalyzeException(ex).Show(description);
             }
             finally
             {
-                Impersonate(false);
+                WindowsLogin.Clear();
             }
         }
 
@@ -91,24 +119,6 @@ namespace UGTS.Encoder
 
         private DataProtectionScope ProtectionScope => IsSystemUser() ? DataProtectionScope.LocalMachine : DataProtectionScope.CurrentUser;
 
-	    private void HDecode(object sender, EventArgs e)
-        {
-            try
-            {
-                if (IsPasswordEnabled) Impersonate(true);
-                var ct = Ciphertext.Value;
-                Plaintext.Value = ct.XDecrypt();
-            }
-            catch (Exception ex)
-            {
-                AnalyzeException(ex).Show("decrypting");
-            }
-            finally
-            {
-                Impersonate(false);
-            }
-        }
-
         private static Exception AnalyzeException(Exception ex)
         {
             if (ex.Message.Contains("Key not valid for use in specified state")) ex = new Exception(ex.Message + "Please verify that the username matches the user that was originally used to create this secure string.");
@@ -117,17 +127,11 @@ namespace UGTS.Encoder
             return ex;
         }
 
-        private bool HasValidUser => !(Username.Value.XIsBlank() || (IsPasswordEnabled && Password.Value.XIsBlank()));
-
-	    private void Impersonate(bool bImpersonate)
-        {
-            if (bImpersonate) LoginExtensions.Impersonate(Username, Password, true);
-            else LoginExtensions.Clear();
-        }
+        private bool HasValidUser => !(Username.Value.IsBlank() || (IsPasswordEnabled && Password.Value.IsBlank()));
 
         private bool IsSystemUser(string user = "")
         {
-            if (user.XIsBlank()) user = Username;
+            if (user.IsBlank()) user = Username;
             var u = new WindowsUserName(user);
             switch (u.Username.Replace(" ", "").ToLower())
             {
@@ -143,7 +147,7 @@ namespace UGTS.Encoder
 
         private bool IsCurrentUser(string user = "")
         {
-            if (user.XIsBlank()) user = Username.Value;
+            if (user.IsBlank()) user = Username.Value;
             user = ("" + user).Trim().ToLower().Replace(" ", "");
             return (user == CurrentUser().ToLower().Trim());
         }

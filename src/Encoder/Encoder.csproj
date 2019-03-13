@@ -85,13 +85,15 @@
     <Compile Include="source\Extensions\DpapiExtensions.cs" />
     <Compile Include="source\Extensions\ExceptionExtensions.cs" />
     <Compile Include="source\Extensions\HexadecimalExtensions.cs" />
-    <Compile Include="source\Extensions\LoginExtensions.cs" />
-    <Compile Include="source\SecureStringWindow.xaml.cs">
+    <Compile Include="source\Windows\WindowsLogin.cs" />
+    <Compile Include="source\WPF\SecureStringWindow.xaml.cs">
       <DependentUpon>SecureStringWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="source\ProgramEntry.cs" />
     <Compile Include="source\Extensions\StringExtensions.cs" />
-    <Compile Include="source\WindowsUserName.cs" />
+    <Compile Include="source\Windows\WindowsUserName.cs" />
+    <Compile Include="source\WPF\IconManager.cs" />
+    <Compile Include="source\WPF\Observable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -116,7 +118,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="source\SecureStringWindow.xaml">
+    <Page Include="source\WPF\SecureStringWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

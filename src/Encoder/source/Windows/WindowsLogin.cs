@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 
-namespace UGTS.Encoder
+namespace UGTS.Encoder.Windows
 {
-    public static class LoginExtensions
+    public static class WindowsLogin
     {
         [ThreadStatic]
         private static WindowsImpersonationContext _impersonation;
@@ -119,7 +119,7 @@ namespace UGTS.Encoder
             var err = Marshal.GetLastWin32Error();
             if ((err == 0) && !alwaysCreate) return null;
             var ex = new Win32Exception(err);
-            return new Exception("Win32 ERROR " + err + (!action.XIsBlank() ? ", " + action : "") + ": " + ex.Message, ex);
+            return new Exception("Win32 ERROR " + err + (!action.IsBlank() ? ", " + action : "") + ": " + ex.Message, ex);
         }
     }
 }

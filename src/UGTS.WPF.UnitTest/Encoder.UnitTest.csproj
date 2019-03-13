@@ -7,8 +7,8 @@
     <ProjectGuid>{9E04D2D5-0551-4727-BA03-0515AABACDA4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UGTS.WPF.UnitTest</RootNamespace>
-    <AssemblyName>UGTS.WPF.UnitTest</AssemblyName>
+    <RootNamespace>UGTS.Encoder.UnitTest</RootNamespace>
+    <AssemblyName>UGTS.Encoder.UnitTest</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -52,13 +52,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\UGTS.WPF\UGTS.WPF.csproj">
-      <Project>{6502bc00-1d05-4318-af5d-5b5172c43575}</Project>
-      <Name>UGTS.WPF</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Properties\" />
+    <ProjectReference Include="..\Encoder\Encoder.csproj">
+      <Project>{2ba3dc84-0606-436f-9fb4-320238faf6f2}</Project>
+      <Name>Encoder</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

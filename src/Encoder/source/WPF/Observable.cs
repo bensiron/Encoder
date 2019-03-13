@@ -12,7 +12,7 @@ using System.ComponentModel;
 // Any dependencies to observables encountered due to a computed function running code in other threads or in separately re-entrant code
 //  (such as by calling Application.DoEvents) may be ignored or applied to the wrong computed functions.
 
-namespace UGTS.WPF
+namespace UGTS.Encoder.WPF
 {
     public class ValueChangedEventArgs<T> : EventArgs
     {

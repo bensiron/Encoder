@@ -1,30 +1,10 @@
 using System;
-using System.IO;
 using System.Windows.Media;
 
 namespace UGTS.WPF
 {
-    static class MediaExtensions
+    public static class MediaExtensions
 	{
-		/// <summary>
-		/// reads the given stream into a bitmap, closes the stream, and returns the bitmap
-		/// </summary>
-		public static ImageSource XReadIntoImage(this Stream stream)
-		{
-		    try
-		    {
-		        return stream != null ? System.Windows.Media.Imaging.BitmapFrame.Create(stream) : null;
-		    }
-		    catch
-		    {
-		        return null;
-		    } 
-            finally
-		    {
-		        stream?.Close();
-		    }
-		}
-
 		/// <summary>
 		/// returns a new color which is the fraction of the way from the first to the second color
 		/// </summary>
@@ -42,5 +22,15 @@ namespace UGTS.WPF
 		{
 			return a + (b - a) * fraction;
 		}
-	}
+
+        /// <summary>
+        /// Returns value limited by the min and max values (min if value is less than min, and max if value if greater than max).
+        /// </summary>
+        public static TComparable XLimit<TComparable>(this TComparable val, TComparable minVal, TComparable maxVal)
+            where TComparable : IComparable
+        {
+            if (val.CompareTo(minVal) < 0) return minVal;
+            return val.CompareTo(maxVal) > 0 ? maxVal : val;
+        }
+    }
 }

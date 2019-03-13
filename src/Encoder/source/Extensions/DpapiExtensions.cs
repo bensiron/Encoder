@@ -12,26 +12,26 @@ namespace UGTS.Encoder
         /// Uses the DPAPI with a per-user key to return the encrypted value of the text.  
         /// Throws a CryptographicException if you attempt to use this (regardless of DataProtectionScope) while impersonating another user (which often happens in the context of IIS)
         /// </summary>
-        public static string XEncrypt(this string text, DataProtectionScope scope = DataProtectionScope.CurrentUser)
+        public static string EncryptWithDpapi(this string text, DataProtectionScope scope = DataProtectionScope.CurrentUser)
         {
             var b = Text.Encoding.UTF8.GetBytes("" + text);
             b = ProtectedData.Protect(b, null, scope);
-            return b.XToHexadecimalString();
+            return b.ToHexadecimalString();
         }
 
         /// <summary>
         /// Uses the DPAPI with a either the per-user or per-machine key to return the decrypted value of the text.
         /// Throws a CryptographicException if you attempt to use this (regardless of DataProtectionScope) while impersonating another user (which often happens in the context of IIS)
         /// </summary>
-        public static string XDecrypt(this string text)
+        public static string DecryptWithDpapi(this string text)
         {
-            var b = text.XDecryptToBytes();
+            var b = text.DecryptToBytes();
             return new string(Text.Encoding.UTF8.GetChars(b));
         }
 
-        private static byte[] XDecryptToBytes(this string text)
+        private static byte[] DecryptToBytes(this string text)
         {
-            var b = text.XHexadecimalToBytes();
+            var b = text.HexadecimalToBytes();
             // scope comes from the encrypted blob, not the parameter to this method
             // therefore, we can pass in whatever we want here, and it still works
             return ProtectedData.Unprotect(b, null, DataProtectionScope.CurrentUser);

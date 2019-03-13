@@ -2,13 +2,14 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Windows.Media;
 
-namespace UGTS.WPF
+namespace UGTS.Encoder.WPF
 {
-    public static class MMain
+    public static class IconManager
     {
         public static Icon MainIcon;
-        public static System.Windows.Media.ImageSource MainIconImage;
+        public static ImageSource MainIconImage;
         private static string _iconPath;
 
         public static string IconPath
@@ -22,13 +23,28 @@ namespace UGTS.WPF
                 {
                     MainIcon = ReadIntoIcon(s);
                     s.Seek(0, SeekOrigin.Begin);
-                    MainIconImage = s.XReadIntoImage();
+                    MainIconImage = ReadIntoImage(s);
                 }
             }
         }
 
         private static Assembly MainAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
 
+        private static ImageSource ReadIntoImage(Stream stream)
+        {
+            try
+            {
+                return stream != null ? System.Windows.Media.Imaging.BitmapFrame.Create(stream) : null;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                stream?.Close();
+            }
+        }
         private static Stream GetResourceStream(Assembly asm, string name)
         {
             var foundName = FindResource(asm, name);
@@ -57,9 +73,6 @@ namespace UGTS.WPF
             return asm.GetManifestResourceNames().FirstOrDefault(found => found.EndsWith(name));
         }
 
-        /// <summary>
-        /// Read the stream into an icon and returns the icon
-        /// </summary>
         private static Icon ReadIntoIcon(Stream stream)
         {
             try

@@ -10,7 +10,6 @@ namespace UGTS.WPF
         
 		protected UgtsWindow()
 		{
-			Icon = MMain.MainIconImage;
 			var c1 = SystemColors.ControlLightColor;
 			var c2 = SystemColors.ControlColor;
 			var cs = c1.XBlend(c2, 0.8);
