@@ -92,7 +92,7 @@
     <Compile Include="source\ProgramEntry.cs" />
     <Compile Include="source\Extensions\StringExtensions.cs" />
     <Compile Include="source\Windows\WindowsUserName.cs" />
-    <Compile Include="source\WPF\IconManager.cs" />
+    <Compile Include="source\WPF\IconReader.cs" />
     <Compile Include="source\WPF\Observable.cs" />
   </ItemGroup>
   <ItemGroup>

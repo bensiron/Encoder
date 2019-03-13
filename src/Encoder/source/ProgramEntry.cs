@@ -11,8 +11,11 @@ namespace UGTS.Encoder
         {
             try
             {
-                IconManager.IconPath = "encoder.ico";
-                var w = new SecureStringWindow { WindowStartupLocation = WindowStartupLocation.CenterScreen };
+                var w = new SecureStringWindow
+                {
+                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
+                    Icon = IconReader.ReadIcon("encoder.ico")
+                };
                 w.ShowDialog();
             }
             catch (Exception ex)

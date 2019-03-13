@@ -22,7 +22,6 @@ namespace UGTS.Encoder.WPF
 
         public SecureStringWindow()
         {
-            Icon = IconManager.MainIconImage;
             Username = new Observable<string>("");
             Password = new Observable<string>("");
             Plaintext = new Observable<string>("");
